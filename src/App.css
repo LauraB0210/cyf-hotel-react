@@ -79,3 +79,7 @@ tr {
 .card {
   width: 18rem;
 }
+
+.last-element {
+  margin-bottom: 80px;
+}
