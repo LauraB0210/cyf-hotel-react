@@ -83,3 +83,7 @@ tr {
 .last-element {
   margin-bottom: 80px;
 }
+
+.selected {
+  background-color: blueviolet;
+}

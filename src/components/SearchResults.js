@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment/moment";
+import PropTypes from "prop-types";
 
-const SearchResults = props => {
+const SearchResults = ({ results }) => {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const addOrRemove = (selectedArr, item) => {
+    return selectedArr.includes(item)
+      ? selectedArr.filter(i => i !== item)
+      : [...selectedArr, item];
+  };
+
+  const handleClick = id => {
+    setSelectedItems(addOrRemove(selectedItems, id));
+  };
+
   return (
     <table className="table table-hover">
       <thead>
@@ -17,12 +30,16 @@ const SearchResults = props => {
         </tr>
       </thead>
       <tbody>
-        {props.results.map(el => {
+        {results.map(el => {
           const checkIn = moment(el.checkInDate);
           const checkOut = moment(el.checkOutDate);
           const difference = checkOut.diff(checkIn, "days");
           return (
-            <tr key={el.id}>
+            <tr
+              key={el.id}
+              onClick={() => handleClick(el.id)}
+              className={selectedItems.indexOf(el.id) >= 0 && "selected"}
+            >
               <td>{el.title}</td>
               <td>{el.firstName}</td>
               <td>{el.surname}</td>
@@ -39,4 +56,7 @@ const SearchResults = props => {
   );
 };
 
+SearchResults.propTypes = {
+  results: PropTypes.array.isRequired
+};
 export default SearchResults;
