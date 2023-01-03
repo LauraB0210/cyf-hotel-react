@@ -8,13 +8,18 @@ const Bookings = () => {
   const [fetched, setFetched] = useState([]);
   const [userId, setUserId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    fetch("https://cyf-react.glitch.me/delayed")
+    fetch("https://cyf-react.glitch.me/error")
       .then(res => res.json())
       .then(data => {
-        setFetched(data);
-        setBookings(data);
+        if (data.error?.length !== 0) {
+          setErrorMessage(data.error);
+        } else {
+          setFetched(data);
+          setBookings(data);
+        }
         setIsLoading(false);
       });
   }, []);
@@ -39,6 +44,8 @@ const Bookings = () => {
         <Search search={search} />
         {isLoading ? (
           <div>ESPERA UN MOMENTO...CARGANDO</div>
+        ) : errorMessage?.length > 0 ? (
+          <div>{errorMessage}</div>
         ) : (
           <SearchResults results={bookings} showProfile={showProfile} />
         )}
