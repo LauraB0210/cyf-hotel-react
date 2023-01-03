@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment/moment";
 import PropTypes from "prop-types";
 
-const SearchResults = ({ results }) => {
+const SearchResults = ({ results, showProfile }) => {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const addOrRemove = (selectedArr, item) => {
@@ -27,6 +27,7 @@ const SearchResults = ({ results }) => {
           <th scope="col">check in date</th>
           <th scope="col">check out date</th>
           <th scope="col">nights</th>
+          <th scope="col">profile</th>
         </tr>
       </thead>
       <tbody>
@@ -38,7 +39,9 @@ const SearchResults = ({ results }) => {
             <tr
               key={el.id}
               onClick={() => handleClick(el.id)}
-              className={selectedItems.indexOf(el.id) >= 0 && "selected"}
+              className={
+                selectedItems.indexOf(el.id) >= 0 ? "selected" : undefined
+              }
             >
               <td>{el.title}</td>
               <td>{el.firstName}</td>
@@ -48,6 +51,9 @@ const SearchResults = ({ results }) => {
               <td>{el.checkInDate}</td>
               <td>{el.checkOutDate}</td>
               <td>{difference}</td>
+              <td>
+                <button onClick={() => showProfile(el.id)}>show</button>
+              </td>
             </tr>
           );
         })}
