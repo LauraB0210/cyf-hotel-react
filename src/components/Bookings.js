@@ -11,10 +11,10 @@ const Bookings = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    fetch("https://cyf-react.glitch.me/error")
+    fetch("https://cyf-react.glitch.me")
       .then(res => res.json())
       .then(data => {
-        if (data.error?.length !== 0) {
+        if (data.error !== undefined) {
           setErrorMessage(data.error);
         } else {
           setFetched(data);
@@ -43,7 +43,7 @@ const Bookings = () => {
       <div className="container">
         <Search search={search} />
         {isLoading ? (
-          <div>ESPERA UN MOMENTO...CARGANDO</div>
+          <div>CARGANDOOOOOOOOOOO</div>
         ) : errorMessage?.length > 0 ? (
           <div>{errorMessage}</div>
         ) : (
